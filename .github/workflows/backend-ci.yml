@@ -1,0 +1,50 @@
+name: Backend CI
+
+on:
+  push:
+    branches:
+      - main
+      - 'feature/**'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  backend:
+    name: Backend - Code Quality & Tests
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      # 1. Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # 4. Run ESLint for code quality
+      - name: Run ESLint
+        run: npx eslint 'src/**/*.ts' --max-warnings=0
+
+      # 5. Run Prettier check
+      - name: Run Prettier
+        run: npx prettier --check 'src/**/*.ts'
+
+      # 6. Build backend (TypeScript)
+      - name: Build backend
+        run: npm run build
+
+      # 7. Run tests
+      - name: Run tests
+        run: npm test

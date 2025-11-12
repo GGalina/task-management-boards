@@ -93,22 +93,44 @@ export const addCard = async (req: Request, res: Response, next: NextFunction) =
     }
 };
 
-export const updateCard = async (req: Request, res: Response, next: NextFunction) => {
+export const updateCard = async (
+    req: Request<{ boardId: string; cardId: string }, any, { title?: string; description?: string; columnName?: string }>,
+    res: Response,
+    next: NextFunction
+) => {
     try {
         const { boardId, cardId } = req.params;
-        const { columnName, title, description } = req.body;
+        const { title, description, columnName } = req.body;
 
         const board = await Board.findById(boardId);
         if (!board) throw new HttpError(404, 'Board not found');
 
-        const column = board.columns.find((col) => col.name === columnName);
-        if (!column) throw new HttpError(400, 'Invalid column name');
+        // Find current column containing the card
+        const currentColumn = board.columns.find(col => col.cards.id(cardId));
+        if (!currentColumn) throw new HttpError(404, 'Card not found');
 
-        const card = column.cards.id(cardId);
+        const card = currentColumn.cards.id(cardId);
         if (!card) throw new HttpError(404, 'Card not found');
 
+        // Update card fields
         if (title !== undefined) card.title = title;
         if (description !== undefined) card.description = description;
+
+        // Move card to another column if requested
+        if (columnName && columnName !== currentColumn.name) {
+            const targetColumn = board.columns.find(col => col.name === columnName);
+            if (!targetColumn) throw new HttpError(400, 'Invalid target column');
+
+            // Remove from current column
+            currentColumn.cards.pull(card._id);
+
+            // Push a new object into target column with same id
+            targetColumn.cards.push({
+                _id: card._id,
+                title: card.title,
+                description: card.description
+            });
+        }
 
         await board.save();
         res.json(board);
@@ -116,7 +138,7 @@ export const updateCard = async (req: Request, res: Response, next: NextFunction
         if (err instanceof HttpError) {
             next(err);
         } else {
-            handleMongooseError(err, req, res, next); 
+            handleMongooseError(err, req, res, next);
         }
     }
 };
@@ -124,26 +146,27 @@ export const updateCard = async (req: Request, res: Response, next: NextFunction
 export const deleteCard = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { boardId, cardId } = req.params;
-        const { columnName } = req.body;
 
         const board = await Board.findById(boardId);
         if (!board) throw new HttpError(404, 'Board not found');
 
-        const column = board.columns.find((col) => col.name === columnName);
-        if (!column) throw new HttpError(400, 'Invalid column name');
+        // Find which column contains this card
+        const column = board.columns.find((col) =>
+        col.cards.some((card) => card._id.equals(cardId))
+        );
+        if (!column) throw new HttpError(404, 'Card not found');
 
-        const card = column.cards.id(cardId);
-        if (!card) throw new HttpError(404, 'Card not found');
+        // Remove the card
+        column.cards.id(cardId)?.deleteOne();
 
-        column.cards.pull(card._id);
         await board.save();
 
-        res.json(board);
+        res.status(200).json(board);
     } catch (err: any) {
         if (err instanceof HttpError) {
-            next(err); 
+            next(err);
         } else {
-            handleMongooseError(err, req, res, next); 
+            handleMongooseError(err, req, res, next);
         }
     }
 };

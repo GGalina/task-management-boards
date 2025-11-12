@@ -1,15 +1,21 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "commonjs",
-    "rootDir": "./src",
-    "outDir": "./dist",
-    "esModuleInterop": true,
-    "strict": true,
-    "skipLibCheck": true,
+    "target": "ES2021",                     // Modern JavaScript target
+    "module": "commonjs",                   // Node.js module system
+    "outDir": "dist",                       // Compiled JS output
+    "strict": true,                         // Enable all strict type-checking options
+    "esModuleInterop": true,                // Allows import/export interop with CommonJS
+    "skipLibCheck": true,                   // Skip type checking of libraries
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true
+    "types": ["node", "jest"],              // Include Node and Jest types globally
+    "resolveJsonModule": true               // Allow importing JSON files
   },
-  "include": ["src"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src",      // Source code
+    "tests"     // Tests folder
+  ],
+  "exclude": [
+    "node_modules", 
+    "dist"
+  ]
 }

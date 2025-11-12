@@ -15,6 +15,7 @@ export interface IColumn {
 
 // --- Board interface ---//
 export interface IBoard extends Document {
+  _id: Types.ObjectId;
   name: string;
   columns: Types.DocumentArray<IColumn>;
   createdAt?: Date;

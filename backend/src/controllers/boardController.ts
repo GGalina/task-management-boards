@@ -10,7 +10,7 @@ export const createBoard = async (req: Request, res: Response, next: NextFunctio
         const board = await Board.create({ name: req.body.name });
 
         res.status(201).json(board);
-    } catch (err: any) {
+    } catch (err: unknown) {
         if (err instanceof HttpError) {
             next(err); 
         } else {
@@ -26,7 +26,7 @@ export const getBoardById = async (req: Request, res: Response, next: NextFuncti
         if (!board) throw new HttpError(404, 'Board not found');
 
         res.json(board);
-    } catch (err: any) {
+    } catch (err: unknown) {
         if (err instanceof HttpError) {
             next(err); 
         } else {
@@ -42,7 +42,7 @@ export const updateBoard = async (req: Request, res: Response, next: NextFunctio
         if (!board) throw new HttpError(404, 'Board not found');
 
         res.json(board);
-    } catch (err: any) {
+    } catch (err: unknown) {
         if (err instanceof HttpError) {
             next(err); 
         } else {
@@ -55,11 +55,10 @@ export const deleteBoard = async (req: Request, res: Response, next: NextFunctio
     try {
         const { boardId } = req.params;
         const board = await Board.findByIdAndDelete(boardId);
-        console.log(board);
         if (!board ) throw new HttpError(404, 'Board not found');
 
         res.status(200).json({ message: 'The board is deleted successfully' });
-    } catch (err: any) {
+    } catch (err: unknown) {
         if (err instanceof HttpError) {
             next(err); 
         } else {
@@ -84,7 +83,7 @@ export const addCard = async (req: Request, res: Response, next: NextFunction) =
         await board.save();
 
         res.status(201).json(board);
-    } catch (err: any) {
+    } catch (err: unknown) {
         if (err instanceof HttpError) {
             next(err); 
         } else {
@@ -94,7 +93,7 @@ export const addCard = async (req: Request, res: Response, next: NextFunction) =
 };
 
 export const updateCard = async (
-    req: Request<{ boardId: string; cardId: string }, any, { title?: string; description?: string; columnName?: string }>,
+    req: Request<{ boardId: string; cardId: string }, unknown, { title?: string; description?: string; columnName?: string }>,
     res: Response,
     next: NextFunction
 ) => {
@@ -134,7 +133,7 @@ export const updateCard = async (
 
         await board.save();
         res.json(board);
-    } catch (err: any) {
+    } catch (err: unknown) {
         if (err instanceof HttpError) {
             next(err);
         } else {
@@ -162,7 +161,7 @@ export const deleteCard = async (req: Request, res: Response, next: NextFunction
         await board.save();
 
         res.status(200).json(board);
-    } catch (err: any) {
+    } catch (err: unknown) {
         if (err instanceof HttpError) {
             next(err);
         } else {
@@ -173,7 +172,7 @@ export const deleteCard = async (req: Request, res: Response, next: NextFunction
 
 // --- Drag and Drop ---
 export const moveCard = async (
-    req: Request<{ boardId: string; cardId: string }, any, IDragDropRequest>,
+    req: Request<{ boardId: string; cardId: string }, unknown, IDragDropRequest>,
     res: Response,
     next: NextFunction
     ) => {
@@ -210,7 +209,7 @@ export const moveCard = async (
         await board.save();
 
         res.json(board);
-    } catch (err: any) {
+    } catch (err: unknown) {
         if (err instanceof HttpError) {
             next(err);
         } else {

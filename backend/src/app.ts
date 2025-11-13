@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
@@ -35,7 +35,7 @@ app.use((_req: Request, res: Response) => {
 
 // Error handler
 app.use(
-  (err: any, _req: Request, res: Response, _next: NextFunction) => {
+  (err: any, _req: Request, res: Response) => {
     const { status = 500, message = 'Server Error' } = err;
     res.status(status).json({ message });
   }

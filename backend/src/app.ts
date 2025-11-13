@@ -36,15 +36,15 @@ function isHttpError(err: unknown): err is HttpError {
   return (
     err instanceof Error &&
     'status' in err &&
-    typeof (err as any).status === 'number' &&
+    typeof (err as { status?: unknown }).status === 'number' &&
     'message' in err &&
-    typeof (err as any).message === 'string'
+    typeof (err as { message?: unknown }).message === 'string'
   );
 }
 
 // Error handler
 app.use(
-  (err: unknown, _req: Request, res: Response, _next: NextFunction) => {
+  (err: unknown, _req: Request, res: Response) => {
     if (isHttpError(err)) {
       res.status(err.status).json({ message: err.message });
     } else if (err instanceof Error) {

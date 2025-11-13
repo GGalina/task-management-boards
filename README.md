@@ -103,6 +103,10 @@ The backend will be available at http://localhost:5000.
 
 Swagger documentation is available at:
 
+https://task-management-boards-4fr8.onrender.com/api-docs
+
+or
+
 http://localhost:5000/api-docs
 
 It covers all endpoints for boards and cards, including drag-and-drop operations.

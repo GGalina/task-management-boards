@@ -1,0 +1,445 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Task Management Boards API",
+    "version": "1.0.0",
+    "description": "API for managing boards, columns, and cards"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/boards": {
+      "post": {
+        "summary": "Create a new board",
+        "tags": ["Boards"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" }
+                },
+                "required": ["name"]
+              },
+              "example": { "name": "My Board 000" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Board created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "_id": "6913d0db27e7cda4e919ff29",
+                  "name": "My Board 000",
+                  "columns": [
+                    { "name": "ToDo", "cards": [] },
+                    { "name": "In Progress", "cards": [] },
+                    { "name": "Done", "cards": [] }
+                  ],
+                  "createdAt": "2025-11-12T00:12:11.058Z",
+                  "updatedAt": "2025-11-12T00:12:11.058Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or invalid field",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object", "properties": { "message": { "type": "string" } } },
+                "example": { "message": "Missing or invalid field: name" }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object", "properties": { "message": { "type": "string" } } },
+                "example": { "message": "Server error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/boards/{boardId}": {
+      "get": {
+        "summary": "Get a board by ID",
+        "tags": ["Boards"],
+        "parameters": [
+          { "name": "boardId", "in": "path", "required": true, "schema": { "type": "string" }, "description": "Board ID" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Board retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" },
+                "example": {
+                  "_id": "6913d0db27e7cda4e919ff29",
+                  "name": "My Board 000",
+                  "columns": [
+                    { "name": "ToDo", "cards": [] },
+                    { "name": "In Progress", "cards": [] },
+                    { "name": "Done", "cards": [] }
+                  ],
+                  "createdAt": "2025-11-12T00:12:11.058Z",
+                  "updatedAt": "2025-11-12T00:12:11.058Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Board not found",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object", "properties": { "message": { "type": "string" } } },
+                "example": { "message": "Board not found" }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update board name",
+        "tags": ["Boards"],
+        "parameters": [
+          { "name": "boardId", "in": "path", "required": true, "schema": { "type": "string" }, "description": "Board ID" }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "type": "object", "properties": { "name": { "type": "string" } }, "required": ["name"] },
+              "example": { "name": "Updated Board Name" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Board updated successfully",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" },
+                "example": {
+                  "_id": "6913d0db27e7cda4e919ff29",
+                  "name": "Updated Board Name",
+                  "columns": [
+                    { "name": "ToDo", "cards": [] },
+                    { "name": "In Progress", "cards": [] },
+                    { "name": "Done", "cards": [] }
+                  ],
+                  "createdAt": "2025-11-12T00:12:11.058Z",
+                  "updatedAt": "2025-11-12T01:15:11.058Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Board not found",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object", "properties": { "message": { "type": "string" } } },
+                "example": { "message": "Board not found" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a board",
+        "tags": ["Boards"],
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "The ID of the board to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Board deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" }
+                  }
+                },
+                "example": {
+                  "message": "The board is deleted successfully"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Board not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "message": { "type": "string" } }
+                },
+                "example": { "message": "Board not found" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/boards/{boardId}/cards": {
+      "post": {
+        "summary": "Add a card to a column",
+        "tags": ["Cards"],
+        "parameters": [
+          { "name": "boardId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "columnName": { "type": "string", "enum": ["ToDo", "In Progress", "Done"] },
+                  "title": { "type": "string" },
+                  "description": { "type": "string" }
+                },
+                "required": ["columnName", "title"]
+              },
+              "example": { "columnName": "ToDo", "title": "New Task", "description": "Task details" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Card added successfully",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" },
+                "example": {
+                  "_id": "6913d0db27e7cda4e919ff29",
+                  "name": "My Board 000",
+                  "columns": [
+                    {
+                      "name": "ToDo",
+                      "cards": [
+                        { "_id": "6913d87b27e7cda4e919ff2a", "title": "New Task", "description": "Task details" }
+                      ]
+                    },
+                    { "name": "In Progress", "cards": [] },
+                    { "name": "Done", "cards": [] }
+                  ],
+                  "createdAt": "2025-11-12T00:12:11.058Z",
+                  "updatedAt": "2025-11-12T01:20:11.058Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid column name",
+            "content": {
+              "application/json": { "schema": { "type": "object", "properties": { "message": { "type": "string" } } }, "example": { "message": "Invalid column name" } }
+            }
+          },
+          "404": {
+            "description": "Board not found",
+            "content": {
+              "application/json": { "schema": { "type": "object", "properties": { "message": { "type": "string" } } }, "example": { "message": "Board not found" } }
+            }
+          }
+        }
+      }
+    },
+    "/boards/{boardId}/cards/{cardId}": {
+      "patch": {
+        "summary": "Update a card",
+        "tags": ["Cards"],
+        "parameters": [
+          { "name": "boardId", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "cardId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "columnName": { "type": "string", "enum": ["ToDo", "In Progress", "Done"] },
+                  "title": { "type": "string" },
+                  "description": { "type": "string" }
+                },
+                "required": ["columnName", "title"]
+              },
+              "example": { "columnName": "ToDo", "title": "Updated Task", "description": "Updated details" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Card updated successfully",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" },
+                "example": {
+                  "_id": "6913d0db27e7cda4e919ff29",
+                  "name": "My Board 000",
+                  "columns": [
+                    {
+                      "name": "ToDo",
+                      "cards": [
+                        { "_id": "6913d87b27e7cda4e919ff2a", "title": "Updated Task", "description": "Updated details" }
+                      ]
+                    },
+                    { "name": "In Progress", "cards": [] },
+                    { "name": "Done", "cards": [] }
+                  ],
+                  "createdAt": "2025-11-12T00:12:11.058Z",
+                  "updatedAt": "2025-11-12T01:25:11.058Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid column name",
+            "content": {
+              "application/json": { "schema": { "type": "object", "properties": { "message": { "type": "string" } } }, "example": { "message": "Invalid column name" } }
+            }
+          },
+          "404": {
+            "description": "Card or board not found",
+            "content": {
+              "application/json": { "schema": { "type": "object", "properties": { "message": { "type": "string" } } }, "example": { "message": "Card not found" } }
+            }
+          }
+        }
+      },
+      "delete": {
+          "summary": "Delete a card",
+          "tags": ["Cards"],
+          "parameters": [
+            { "name": "boardId", "in": "path", "required": true, "schema": { "type": "string" } },
+            { "name": "cardId", "in": "path", "required": true, "schema": { "type": "string" } }
+          ],
+          "responses": {
+            "200": {
+              "description": "Card deleted successfully, returns full board",
+              "content": {
+                "application/json": {
+                  "schema": { "type": "object" },
+                  "example": {
+                    "_id": "6913d0db27e7cda4e919ff29",
+                    "name": "My Board 000",
+                    "columns": [
+                      { "name": "ToDo", "cards": [] },
+                      { "name": "In Progress", "cards": [] },
+                      { "name": "Done", "cards": [] }
+                    ],
+                    "createdAt": "2025-11-12T00:12:11.058Z",
+                    "updatedAt": "2025-11-12T01:30:11.058Z"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Card or board not found",
+              "content": {
+                "application/json": {
+                  "schema": { "type": "object", "properties": { "message": { "type": "string" } } },
+                  "example": { "message": "Card not found" }
+                }
+              }
+            }
+          }
+        }
+      },
+    "/boards/{boardId}/cards/{cardId}/move": {
+      "patch": {
+        "summary": "Move a card between columns or reorder",
+        "tags": ["Cards"],
+        "parameters": [
+          { "name": "boardId", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "cardId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fromColumn": { "type": "string", "enum": ["ToDo", "In Progress", "Done"] },
+                  "toColumn": { "type": "string", "enum": ["ToDo", "In Progress", "Done"] },
+                  "toIndex": { "type": "integer", "minimum": 0 }
+                },
+                "required": ["fromColumn", "toColumn"]
+              },
+              "example": { "fromColumn": "ToDo", "toColumn": "In Progress", "toIndex": 0 }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Card moved successfully",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" },
+                "example": {
+                  "_id": "6913d0db27e7cda4e919ff29",
+                  "name": "My Board 000",
+                  "columns": [
+                    {
+                      "name": "ToDo",
+                      "cards": []
+                    },
+                    {
+                      "name": "In Progress",
+                      "cards": [
+                        { "_id": "6913d87b27e7cda4e919ff2a", "title": "Task moved", "description": "" }
+                      ]
+                    },
+                    { "name": "Done", "cards": [] }
+                  ],
+                  "createdAt": "2025-11-12T00:12:11.058Z",
+                  "updatedAt": "2025-11-12T01:40:11.058Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid columns or index",
+            "content": {
+              "application/json": { "schema": { "type": "object", "properties": { "message": { "type": "string" } } }, "example": { "message": "Invalid columns or index" } }
+            }
+          },
+          "404": {
+            "description": "Card or board not found",
+            "content": {
+              "application/json": { "schema": { "type": "object", "properties": { "message": { "type": "string" } } }, "example": { "message": "Card not found" } }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    { "name": "Boards", "description": "Board management" },
+    { "name": "Cards", "description": "Card management" }
+  ]
+}

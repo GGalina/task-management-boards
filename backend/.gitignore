@@ -43,9 +43,6 @@ build/
 # MacOS
 .DS_Store
 
-# Swagger generated files (if any)
-swagger.json
-
 # Coverage reports
 coverage/
 

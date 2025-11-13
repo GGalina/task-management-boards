@@ -28,31 +28,29 @@ app.use('/boards', boardRouter);
 
 // 404 handler
 app.use((_req: Request, res: Response) => {
-  res.status(404).json({ message: 'Not found' });
+    res.status(404).json({ message: 'Not found' });
 });
 
 // Type guard for HttpError
 function isHttpError(err: unknown): err is HttpError {
-  return (
-    err instanceof Error &&
-    'status' in err &&
-    typeof (err as { status?: unknown }).status === 'number' &&
-    'message' in err &&
-    typeof (err as { message?: unknown }).message === 'string'
-  );
+    return (
+        err instanceof Error &&
+        'status' in err &&
+        typeof (err as { status?: unknown }).status === 'number' &&
+        'message' in err &&
+        typeof (err as { message?: unknown }).message === 'string'
+    );
 }
 
 // Error handler
-app.use(
-  (err: unknown, _req: Request, res: Response) => {
+app.use((err: unknown, _req: Request, res: Response) => {
     if (isHttpError(err)) {
-      res.status(err.status).json({ message: err.message });
+        res.status(err.status).json({ message: err.message });
     } else if (err instanceof Error) {
-      res.status(500).json({ message: err.message || 'Server Error' });
+        res.status(500).json({ message: err.message || 'Server Error' });
     } else {
-      res.status(500).json({ message: 'Server Error' });
+        res.status(500).json({ message: 'Server Error' });
     }
-  }
-);
+});
 
 export default app;

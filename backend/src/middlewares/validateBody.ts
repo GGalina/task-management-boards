@@ -12,7 +12,10 @@ export const validateBody = (schema: Joi.ObjectSchema) => {
         const { error } = schema.validate(req.body, { abortEarly: true });
         if (error) {
             return next(
-                new HttpError(400, `Missing or invalid field: ${error.details[0].path.join('.')}`)
+                new HttpError(
+                    400,
+                    `Missing or invalid field: ${error.details[0].path.join('.')}`,
+                ),
             );
         }
 

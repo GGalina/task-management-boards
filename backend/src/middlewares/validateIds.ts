@@ -7,7 +7,9 @@ export const validateIds = (ids: string[]) => {
         for (const id of ids) {
             const value = req.params[id];
             if (!value || !isValidObjectId(value)) {
-                return next(new HttpError(400, `${id} is not a valid ObjectId`));
+                return next(
+                    new HttpError(400, `${id} is not a valid ObjectId`),
+                );
             }
         }
         next();

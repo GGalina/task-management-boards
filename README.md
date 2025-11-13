@@ -2,7 +2,7 @@
 
 ## Backend
 
-This is the **backend** part of the Task Management Boards project, built with **Node.js**, **Express**, **TypeScript**, and **MongoDB**. It provides REST APIs to manage boards, columns, and cards, including drag-and-drop functionality.
+This is the **backend** part of the Task Management Boards project, built with **Node.js**, **Express**, **TypeScript**, and **MongoDB**. It provides REST APIs to manage boards, columns, and cards, including drag-and-drop functionality. The backend is deployed on Render and available at: 👉 https://task-management-boards-4fr8.onrender.com
 
 ---
 

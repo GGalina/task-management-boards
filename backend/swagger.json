@@ -7,8 +7,8 @@
   },
   "servers": [
     {
-      "url": "http://localhost:5000",
-      "description": "Local server"
+      "url": "https://task-management-boards-4fr8.onrender.com",
+      "description": "Render server"
     }
   ],
   "paths": {

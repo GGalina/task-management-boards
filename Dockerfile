@@ -8,16 +8,21 @@ WORKDIR /app
 COPY backend/package*.json ./backend/
 
 # Install dependencies
-RUN npm install --prefix backend
+RUN cd backend && npm install
 
-# Copy backend source code
+# Copy all backend source
 COPY backend ./backend
 
-# Build TypeScript
-RUN npm run build --prefix backend
+# Copy .env file (optional — for local builds only)
+# You can comment this out in CI/CD (Render injects env vars)
+COPY backend/.env ./backend/.env
 
-# Expose backend port
+
+# Build TypeScript
+RUN cd backend && npm run build
+
+# Expose the backend port
 EXPOSE 5000
 
-# Run the compiled JS file
-CMD ["node", "backend/dist/server.js"]
+# Start the app
+CMD ["node", "backend/dist/src/server.js"]

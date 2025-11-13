@@ -1,10 +1,11 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import dotenv from 'dotenv';
 import swaggerDocument from '../swagger.json';
-import boardRouter from './routes/boardRoutes'
+import boardRouter from './routes/boardRoutes';
+import HttpError from './helpers/HttpError';
 
 dotenv.config();
 
@@ -22,9 +23,6 @@ app.use(express.urlencoded({ extended: false }));
 // Swagger docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// Swagger docs
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
 // Routes
 app.use('/boards', boardRouter);
 
@@ -33,11 +31,27 @@ app.use((_req: Request, res: Response) => {
   res.status(404).json({ message: 'Not found' });
 });
 
+// Type guard for HttpError
+function isHttpError(err: unknown): err is HttpError {
+  return (
+    err instanceof Error &&
+    'status' in err &&
+    typeof (err as any).status === 'number' &&
+    'message' in err &&
+    typeof (err as any).message === 'string'
+  );
+}
+
 // Error handler
 app.use(
-  (err: any, _req: Request, res: Response) => {
-    const { status = 500, message = 'Server Error' } = err;
-    res.status(status).json({ message });
+  (err: unknown, _req: Request, res: Response, _next: NextFunction) => {
+    if (isHttpError(err)) {
+      res.status(err.status).json({ message: err.message });
+    } else if (err instanceof Error) {
+      res.status(500).json({ message: err.message || 'Server Error' });
+    } else {
+      res.status(500).json({ message: 'Server Error' });
+    }
   }
 );
 

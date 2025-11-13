@@ -14,8 +14,7 @@ RUN cd backend && npm install
 COPY backend ./backend
 
 # Copy .env file (optional — for local builds only)
-# You can comment this out in CI/CD (Render injects env vars)
-COPY backend/.env ./backend/.env
+#COPY backend/.env ./backend/.env
 
 
 # Build TypeScript

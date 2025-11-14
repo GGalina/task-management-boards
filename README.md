@@ -43,7 +43,7 @@ This is the **backend** part of the Task Management Boards project, built with *
 1. Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/GGalina/task-management-boards.git
 cd task-management-boards/backend
 ```
 

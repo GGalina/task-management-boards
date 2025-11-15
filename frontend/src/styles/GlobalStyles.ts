@@ -1,0 +1,29 @@
+import { createGlobalStyle } from 'styled-components';
+
+const GlobalStyles = createGlobalStyle`
+ {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body, #root {
+    height: 100%;
+  }
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f5f7;
+    color: #333;
+  }
+
+  button {
+    font-family: 'Roboto', sans-serif;
+  }
+
+  input, textarea {
+    font-family: 'Roboto', sans-serif;
+  }
+`;
+
+export default GlobalStyles;

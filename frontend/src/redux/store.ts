@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import boardsReducer from './boardsSlice';
+import boardsReducer from './boards/boardsSlice';
 
 export const store = configureStore({
   reducer: {

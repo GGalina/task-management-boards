@@ -1,7 +1,9 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
- {
+  *,
+  *::before,
+  *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -17,11 +19,7 @@ const GlobalStyles = createGlobalStyle`
     color: #333;
   }
 
-  button {
-    font-family: 'Roboto', sans-serif;
-  }
-
-  input, textarea {
+  button, input, textarea {
     font-family: 'Roboto', sans-serif;
   }
 `;

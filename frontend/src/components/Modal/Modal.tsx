@@ -1,10 +1,6 @@
 import React from 'react';
+import type { ModalProps } from '../../types/ui';
 import { Overlay, ModalContent } from './Modal.styled';
-
-type ModalProps = {
-  children: React.ReactNode;
-  onClose: () => void;
-};
 
 const Modal: React.FC<ModalProps> = ({ children, onClose }) => {
   return (

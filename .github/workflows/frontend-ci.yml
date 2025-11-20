@@ -1,0 +1,46 @@
+name: Frontend CI
+
+on:
+  push:
+    branches:
+      - main
+      - 'feature/**'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  frontend:
+    name: Frontend - Code Quality & Build
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      # 1. Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # 4. Run ESLint
+      - name: Run ESLint
+        run: npx eslint 'src/**/*.{ts,tsx}' --max-warnings=0
+
+      # 5. Run Prettier check
+      - name: Run Prettier
+        run: npx prettier --check 'src/**/*.{ts,tsx}'
+
+      # 6. Build frontend (Vite)
+      - name: Build frontend
+        run: npm run build

@@ -1,6 +1,13 @@
-import React from 'react';
-import { Spinner } from './Loader.styled';
+import { FC } from 'react';
+import { CircleLoader } from 'react-spinners';
+import { Wrapper } from './Loader.styled';
 
-const Loader: React.FC = () => <Spinner />;
+const Loader: FC = () => {
+    return (
+        <Wrapper>
+            <CircleLoader size={45} color="#7ba38a" />
+        </Wrapper>
+    );
+};
 
 export default Loader;

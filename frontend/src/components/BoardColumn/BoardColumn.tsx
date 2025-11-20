@@ -1,20 +1,39 @@
 import React from 'react';
-import type { Card } from '../../types/card';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { useDroppable } from '@dnd-kit/core';
 import CardItem from '../CardItem/CardItem';
+import type { BoardColumnProps } from '../../types/board';
 import { ColumnWrapper, ColumnTitle, AddCardButton } from './BoardColumn.styled';
 
-type BoardColumnProps = {
-  title: string;
-  cards: Card[];
-  onAddCard: () => void;
-};
+const BoardColumn: React.FC<BoardColumnProps> = ({
+  droppableId,
+  title,
+  cards,
+  onAddCard,
+  onEditCard,
+  onDeleteCard
+  }) => {
 
-const BoardColumn: React.FC<BoardColumnProps> = ({ title, cards, onAddCard }) => {
+  const { setNodeRef } = useDroppable({
+    id: droppableId,
+  });
+
   return (
-    <ColumnWrapper>
+    <ColumnWrapper ref={setNodeRef}>
       <ColumnTitle>{title}</ColumnTitle>
-      {cards.map(card => <CardItem key={card._id} card={card} />)}
-      <AddCardButton onClick={onAddCard}>Add Card</AddCardButton>
+
+      <SortableContext items={cards.map(c => c._id)} strategy={verticalListSortingStrategy}>
+        {cards.map(card => (
+          <CardItem
+            key={card._id}
+            card={card}
+            onEdit={onEditCard}
+            onDelete={onDeleteCard}
+          />
+        ))}
+      </SortableContext>
+
+      <AddCardButton onClick={onAddCard}>+ Add Card</AddCardButton>
     </ColumnWrapper>
   );
 };

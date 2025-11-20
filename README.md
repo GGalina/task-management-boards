@@ -1,8 +1,13 @@
 # Task Management Boards 
 
+A full-stack task management application with boards, columns, and cards, including drag-and-drop functionality.
+
 ## Backend
 
-This is the **backend** part of the Task Management Boards project, built with **Node.js**, **Express**, **TypeScript**, and **MongoDB**. It provides REST APIs to manage boards, columns, and cards, including drag-and-drop functionality. The backend is deployed on Render and available at: 👉 https://task-management-boards-4fr8.onrender.com
+The backend is built with Node.js, Express, TypeScript, and MongoDB. It provides REST APIs to manage boards, columns, and cards, including drag-and-drop operations.
+
+Backend is deployed on Render:
+👉 https://task-management-boards-4fr8.onrender.com
 
 ---
 
@@ -28,6 +33,37 @@ This is the **backend** part of the Task Management Boards project, built with *
 - Swagger for API documentation
 
 ---
+## Frontend
+
+The frontend is built with React, TypeScript, and Redux Toolkit, using @dnd-kit for smooth drag-and-drop interactions. It communicates with the backend API to display and manage boards, columns, and cards.
+
+Frontend is deployed on Render:
+👉 
+
+---
+
+### Frontend Features
+
+- View, create, update, and delete boards
+- Create and manage columns and cards
+- Smooth drag-and-drop using @dnd-kit/core
+- Global state management with Redux Toolkit
+- Loading and error states for async requests
+- Clean and responsive UI
+- Type-safe codebase using TypeScript
+
+---
+
+### Frontend Technologies
+
+- React
+- TypeScript
+- Redux Toolkit + React-Redux
+- @dnd-kit
+- Axios
+- Styled-components
+- Vite
+- ESLint + Prettier
 
 ## Getting Started
 
@@ -111,9 +147,29 @@ http://localhost:5000/api-docs
 
 It covers all endpoints for boards and cards, including drag-and-drop operations.
 
+## Frontend Setup
+
+1. Installation
+
+```bash
+cd ../frontend
+npm install
+npm run dev
+```
+Frontend runs at: http://localhost:5173
+
+2. Environment Variables
+
+Create a .env or .env.local file:
+```bash
+VITE_API_URL=https://task-management-boards-4fr8.onrender.com
+```
+
 ### Testing & Code Quality
 
 - Unit and integration tests: Jest + Supertest
 - Linting: ESLint + Prettier
 - GitHub Actions CI can be set up to run tests and linting on push/PR
 
+
+* Test task for Incode Group. Requirements: https://github.com/Vladymyrdev/github-kanban-test-task?tab=readme-ov-file#task-management-boards

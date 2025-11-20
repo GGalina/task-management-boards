@@ -38,7 +38,7 @@ Backend is deployed on Render:
 The frontend is built with React, TypeScript, and Redux Toolkit, using @dnd-kit for smooth drag-and-drop interactions. It communicates with the backend API to display and manage boards, columns, and cards.
 
 Frontend is deployed on Render:
-👉 
+👉 https://task-management-boards-frontend.onrender.com/
 
 ---
 

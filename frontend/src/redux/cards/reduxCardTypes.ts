@@ -1,6 +1,6 @@
 export type CreateCardPayload = {
   boardId: string;
-  columnName: 'ToDo' | 'In Progress' | 'Done'; 
+  columnName: 'ToDo' | 'In Progress' | 'Done';
   title: string;
   description?: string;
 };
@@ -8,7 +8,7 @@ export type CreateCardPayload = {
 export type UpdateCardPayload = {
   boardId: string;
   cardId: string;
-  columnName: 'ToDo' | 'In Progress' | 'Done'; 
+  columnName: 'ToDo' | 'In Progress' | 'Done';
   title: string;
   description?: string;
 };

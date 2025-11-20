@@ -5,11 +5,7 @@ import IconButton from '../IconButton/IconButton';
 import EditIcon from '../../assets/edit.svg';
 import DeleteIcon from '../../assets/delete.svg';
 import type { CardItemProps } from '../../types/card';
-import { 
-  CardWrapper, 
-  CardTitle, 
-  CardDescription, 
-  CardButtonsWrapper } from './CardItem.styled';
+import { CardWrapper, CardTitle, CardDescription, CardButtonsWrapper } from './CardItem.styled';
 
 const CardItem: React.FC<CardItemProps> = ({ card, onEdit, onDelete }) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
@@ -30,7 +26,6 @@ const CardItem: React.FC<CardItemProps> = ({ card, onEdit, onDelete }) => {
       {card.description && <CardDescription>{card.description}</CardDescription>}
 
       <CardButtonsWrapper>
-
         {onEdit && (
           <IconButton
             variant="edit"
@@ -52,7 +47,6 @@ const CardItem: React.FC<CardItemProps> = ({ card, onEdit, onDelete }) => {
             }}
           />
         )}
-        
       </CardButtonsWrapper>
     </CardWrapper>
   );

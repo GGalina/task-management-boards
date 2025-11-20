@@ -12,10 +12,12 @@ export const TextArea = styled.textarea`
   border-radius: 4px;
   border: 1px solid #bfb9b9ff;
   resize: vertical;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 
   &:focus {
-    border-color: #7ba38a;   
+    border-color: #7ba38a;
     box-shadow: 0 0 0 2px rgba(51, 201, 106, 0.25);
     outline: none;
   }
@@ -23,7 +25,7 @@ export const TextArea = styled.textarea`
 
 export const Title = styled.h3`
   font-family: 'Roboto', sans-serif;
-  font-size: 18px; 
+  font-size: 18px;
   font-weight: 600;
   line-height: 1.6;
   margin: 0 0 16px 0;
@@ -37,10 +39,12 @@ export const Input = styled.input`
   border-radius: 4px;
   border: 1px solid #bfb9b9ff;
   flex: 1;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 
   &:focus {
-    border-color: #7ba38a;   
+    border-color: #7ba38a;
     box-shadow: 0 0 0 2px rgba(51, 201, 106, 0.25);
     outline: none;
   }
@@ -74,6 +78,6 @@ export const CloseButton = styled.button`
   }
 
   &:hover img {
-    opacity: 0.8; 
+    opacity: 0.8;
   }
 `;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; 
+import React, { useState } from 'react';
 import Modal from '../Modal/Modal';
 import CloseIcon from '../../assets/close.svg';
 import type { CardFormProps } from '../../types/card';
@@ -8,11 +8,10 @@ const CardForm: React.FC<CardFormProps> = ({
   initialData = {},
   onSubmit,
   onClose,
-  titleText = "Create Card",
+  titleText = 'Create Card',
 }) => {
-
-  const [title, setTitle] = useState(initialData.title || "");
-  const [description, setDescription] = useState(initialData.description || "");
+  const [title, setTitle] = useState(initialData.title || '');
+  const [description, setDescription] = useState(initialData.description || '');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,7 +26,6 @@ const CardForm: React.FC<CardFormProps> = ({
   return (
     <Modal onClose={onClose}>
       <Form onSubmit={handleSubmit}>
-
         <CloseButton type="button" onClick={onClose}>
           <img src={CloseIcon} alt="close" />
         </CloseButton>

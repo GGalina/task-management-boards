@@ -8,11 +8,7 @@ export type Card = {
 
 export type CardFormProps = {
   initialData?: Partial<Card>;
-  onSubmit: (data: { 
-    title: string; 
-    description?: string; 
-    cardId?: string; 
-  }) => void;
+  onSubmit: (data: { title: string; description?: string; cardId?: string }) => void;
   onClose: () => void;
   titleText?: string;
 };

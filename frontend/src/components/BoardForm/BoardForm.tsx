@@ -16,7 +16,6 @@ const BoardForm: React.FC<BoardFormProps> = ({ title, initialName = '', onSubmit
   return (
     <Modal onClose={onClose}>
       <Form onSubmit={handleSubmit}>
-
         <CloseButton type="button" onClick={onClose}>
           <img src={CloseIcon} alt="close" />
         </CloseButton>
@@ -31,7 +30,6 @@ const BoardForm: React.FC<BoardFormProps> = ({ title, initialName = '', onSubmit
         />
 
         <Button type="submit">Save</Button>
-
       </Form>
     </Modal>
   );

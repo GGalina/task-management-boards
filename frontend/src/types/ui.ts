@@ -1,6 +1,6 @@
 export interface IconButtonProps {
   variant: 'edit' | 'delete';
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void; 
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   children?: React.ReactNode;
   icon?: string;
 }

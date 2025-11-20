@@ -1,7 +1,12 @@
 import React, { useState, ChangeEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/useTypedRedux';
 
-import { fetchBoard, createBoard, updateBoard, deleteBoard } from '../../redux/boards/boardsOperations';
+import {
+  fetchBoard,
+  createBoard,
+  updateBoard,
+  deleteBoard,
+} from '../../redux/boards/boardsOperations';
 import { createCard, updateCard, deleteCard, moveCard } from '../../redux/cards/cardsOperations';
 
 import type { Board } from '../../types/board';
@@ -60,7 +65,7 @@ const COLUMN_BACKEND_NAMES: Record<ColumnKey, 'ToDo' | 'In Progress' | 'Done'> =
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { currentBoard, loading, error } = useAppSelector(state => state.boards);
+  const { currentBoard, loading, error } = useAppSelector((state) => state.boards);
 
   const [boardId, setBoardId] = useState('');
   const [showBoardForm, setShowBoardForm] = useState(false);
@@ -71,14 +76,14 @@ const Home: React.FC = () => {
 
   /** Column helpers */
   const getColumnCards = (backendName: 'ToDo' | 'In Progress' | 'Done') =>
-    currentBoard?.columns.find(col => col.name === backendName)?.cards ?? [];
+    currentBoard?.columns.find((col) => col.name === backendName)?.cards ?? [];
 
   const getColumnKeyByCard = (cardId: string): ColumnKey | null => {
     if (!currentBoard) return null;
     for (const key of ['todo', 'inprogress', 'done'] as ColumnKey[]) {
       const backend = COLUMN_BACKEND_NAMES[key];
-      const col = currentBoard.columns.find(c => c.name === backend);
-      if (col?.cards.some(c => c._id === cardId)) return key;
+      const col = currentBoard.columns.find((c) => c.name === backend);
+      if (col?.cards.some((c) => c._id === cardId)) return key;
     }
     return null;
   };
@@ -122,7 +127,7 @@ const Home: React.FC = () => {
         columnName: COLUMN_BACKEND_NAMES[showCardFormColumn],
         title,
         description,
-      })
+      }),
     );
     setShowCardFormColumn(null);
   };
@@ -137,7 +142,7 @@ const Home: React.FC = () => {
         columnName: COLUMN_BACKEND_NAMES[colKey],
         title,
         description,
-      })
+      }),
     );
     setEditingCard(null);
     setShowCardFormColumn(null);
@@ -150,7 +155,7 @@ const Home: React.FC = () => {
     const id = event.active.id.toString();
     const colKey = getColumnKeyByCard(id);
     if (!colKey) return;
-    const card = getColumnCards(COLUMN_BACKEND_NAMES[colKey]).find(c => c._id === id);
+    const card = getColumnCards(COLUMN_BACKEND_NAMES[colKey]).find((c) => c._id === id);
     if (card) setActiveCard(card);
   };
 
@@ -167,7 +172,7 @@ const Home: React.FC = () => {
     if (!fromColumnKey || !toColumnKey) return;
 
     const toCards = getColumnCards(COLUMN_BACKEND_NAMES[toColumnKey]);
-    const overIndex = toCards.findIndex(c => c._id === overId);
+    const overIndex = toCards.findIndex((c) => c._id === overId);
     const newIndex = overIndex >= 0 ? overIndex : toCards.length;
 
     dispatch(
@@ -177,7 +182,7 @@ const Home: React.FC = () => {
         fromColumn: COLUMN_BACKEND_NAMES[fromColumnKey],
         toColumn: COLUMN_BACKEND_NAMES[toColumnKey],
         toIndex: newIndex,
-      })
+      }),
     );
   };
 
@@ -199,29 +204,31 @@ const Home: React.FC = () => {
       {currentBoard && (
         <>
           <BoardHeader>
-
             <BoardInfo>
               <BoardTitle>{currentBoard.name}</BoardTitle>
               <BoardId>Board ID: {currentBoard._id}</BoardId>
             </BoardInfo>
 
             <ButtonsContainer>
-              <IconButton variant="edit" icon={EditIcon} onClick={handleEditBoard}>Edit</IconButton>
-              <IconButton variant="delete" icon={DeleteIcon} onClick={handleDeleteBoard}>Delete</IconButton>
+              <IconButton variant="edit" icon={EditIcon} onClick={handleEditBoard}>
+                Edit
+              </IconButton>
+              <IconButton variant="delete" icon={DeleteIcon} onClick={handleDeleteBoard}>
+                Delete
+              </IconButton>
             </ButtonsContainer>
-
           </BoardHeader>
 
           <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
             <ColumnsWrapper>
-              {(['todo', 'inprogress', 'done'] as ColumnKey[]).map(col => (
+              {(['todo', 'inprogress', 'done'] as ColumnKey[]).map((col) => (
                 <BoardColumn
                   key={col}
                   droppableId={col}
                   title={COLUMN_TITLES[col]}
                   cards={getColumnCards(COLUMN_BACKEND_NAMES[col])}
                   onAddCard={() => setShowCardFormColumn(col)}
-                  onEditCard={card => handleCardEdit(card, col)}
+                  onEditCard={(card) => handleCardEdit(card, col)}
                   onDeleteCard={handleCardDelete}
                 />
               ))}
@@ -234,7 +241,13 @@ const Home: React.FC = () => {
         </>
       )}
 
-      {showBoardForm && <BoardForm title="Create Board" onSubmit={handleCreateBoard} onClose={() => setShowBoardForm(false)} />}
+      {showBoardForm && (
+        <BoardForm
+          title="Create Board"
+          onSubmit={handleCreateBoard}
+          onClose={() => setShowBoardForm(false)}
+        />
+      )}
 
       {editBoard && (
         <BoardForm

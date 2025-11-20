@@ -9,7 +9,7 @@ export type BoardColumn = {
 export type Board = {
   _id: string;
   name: string;
-  columns: BoardColumn[]; 
+  columns: BoardColumn[];
   createdAt?: string;
   updatedAt?: string;
 };

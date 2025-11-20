@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 export const ColumnWrapper = styled.div`
   background-color: #edeaeaff;
-  border: 1px solid #bfb9b9ff; 
+  border: 1px solid #bfb9b9ff;
   border-radius: 8px;
   padding: 16px;
-  width: 300px; 
+  width: 300px;
   min-height: calc(100vh - 40px);
 
   display: flex;
@@ -30,7 +30,7 @@ export const ColumnWrapper = styled.div`
 
 export const ColumnTitle = styled.h3`
   font-family: 'Roboto', sans-serif;
-  font-size: 16px; 
+  font-size: 16px;
   font-weight: 600;
   margin-bottom: 12px;
   text-align: center;

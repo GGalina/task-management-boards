@@ -8,15 +8,15 @@ export const CardWrapper = styled.div`
   border-radius: 6px;
   padding-bottom: 40px;
   margin-bottom: 12px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: grab;
   box-sizing: border-box;
-  position: relative; 
+  position: relative;
 `;
 
 export const CardTitle = styled.h4`
   font-family: 'Roboto', sans-serif;
-  font-size: 16px; 
+  font-size: 16px;
   font-weight: 600;
   margin-bottom: 10px;
   color: #1d1d1d;
@@ -25,7 +25,7 @@ export const CardTitle = styled.h4`
 
 export const CardDescription = styled.p`
   font-family: 'Roboto', sans-serif;
-  font-size: 14px; 
+  font-size: 14px;
   font-weight: 400;
   color: #555555;
   word-break: break-word;
@@ -36,5 +36,5 @@ export const CardButtonsWrapper = styled.div`
   bottom: 8px;
   right: 8px;
   display: flex;
-  gap: 6px; 
+  gap: 6px;
 `;

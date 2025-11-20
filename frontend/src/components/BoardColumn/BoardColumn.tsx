@@ -11,9 +11,8 @@ const BoardColumn: React.FC<BoardColumnProps> = ({
   cards,
   onAddCard,
   onEditCard,
-  onDeleteCard
-  }) => {
-
+  onDeleteCard,
+}) => {
   const { setNodeRef } = useDroppable({
     id: droppableId,
   });
@@ -22,14 +21,9 @@ const BoardColumn: React.FC<BoardColumnProps> = ({
     <ColumnWrapper ref={setNodeRef}>
       <ColumnTitle>{title}</ColumnTitle>
 
-      <SortableContext items={cards.map(c => c._id)} strategy={verticalListSortingStrategy}>
-        {cards.map(card => (
-          <CardItem
-            key={card._id}
-            card={card}
-            onEdit={onEditCard}
-            onDelete={onDeleteCard}
-          />
+      <SortableContext items={cards.map((c) => c._id)} strategy={verticalListSortingStrategy}>
+        {cards.map((card) => (
+          <CardItem key={card._id} card={card} onEdit={onEditCard} onDelete={onDeleteCard} />
         ))}
       </SortableContext>
 

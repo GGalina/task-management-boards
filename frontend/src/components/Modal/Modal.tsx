@@ -5,9 +5,7 @@ import { Overlay, ModalContent } from './Modal.styled';
 const Modal: React.FC<ModalProps> = ({ children, onClose }) => {
   return (
     <Overlay onClick={onClose}>
-      <ModalContent onClick={(e) => e.stopPropagation()}>
-        {children}
-      </ModalContent>
+      <ModalContent onClick={(e) => e.stopPropagation()}>{children}</ModalContent>
     </Overlay>
   );
 };

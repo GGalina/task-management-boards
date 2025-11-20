@@ -172,4 +172,4 @@ VITE_API_URL=https://task-management-boards-4fr8.onrender.com
 - GitHub Actions CI can be set up to run tests and linting on push/PR
 
 
-* Test task for Incode Group. Requirements: https://github.com/Vladymyrdev/github-kanban-test-task?tab=readme-ov-file#task-management-boards
+Test task for Incode Group. Requirements: https://github.com/Vladymyrdev/github-kanban-test-task?tab=readme-ov-file#task-management-boards
